@@ -1,69 +1,57 @@
 import Image from "next/image";
+import ContactSection from "./components/contact-section";
+import SiteFooter from "./components/site-footer";
+import TestimonialsSection from "./components/testimonials-section";
+import { testimonials, testimonialPlaceholders } from "./lib/testimonials";
+import ProcessSection from "./components/process-section";
+import PortfolioSection from "./components/portfolio-section";
+import { siteSettings } from "./lib/settings";
+import { publishedPortfolioProjects } from "./lib/portfolio";
+import StudioHeader from "./components/studio-header";
+import ServicesSection from "./components/services-section";
+import studioHero from "./_assets/studio-hero.png";
+
+function BenefitIcon({ type }: { type: "design" | "mobile" | "business" }) {
+  return <svg viewBox="0 0 28 28" fill="none" stroke="currentColor" strokeWidth="1.1" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+    {type === "design" && <><path d="m3 10 5-6h12l5 6-11 14L3 10Z" /><path d="M3 10h22M8 4l6 20L20 4M8 4l6 6 6-6" /></>}
+    {type === "mobile" && <><rect x="8" y="2" width="12" height="24" rx="2"/><path d="M12 5h4M12 23h4" /></>}
+    {type === "business" && <><path d="m3 21 6-8 6 3 9-11M18 5h6v6"/><path d="M5 6 3 9M22 19l2 3"/></>}
+  </svg>;
+}
 
 export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+  const showPortfolio = siteSettings.portfolio.enabled && publishedPortfolioProjects.length > 0;
+  const feedback = siteSettings.testimonials.preview ? testimonialPlaceholders : testimonials.filter((item) => item.published);
+  return <>
+    <a className="skip-link" href="#main">Skip to content</a>
+    <StudioHeader showPortfolio={showPortfolio} />
+    <main id="main">
+      <section className="hero" aria-labelledby="hero-title">
+        <div className="hero-wash" aria-hidden="true" />
+        <div className="hero-content shell">
+          <div className="hero-copy">
+            <p className="eyebrow">Websites with purpose</p>
+            <h1 id="hero-title">Beautiful websites<br className="wide-break" /> for brands that<br className="wide-break" /> want to <em>grow.</em></h1>
+            <p className="hero-description">Thoughtful websites that tell your story, connect with your customers and help your business grow.</p>
+            <div className="hero-actions">
+              <a className="button button-primary" href="#project" data-project-trigger>Let’s talk about your website <span aria-hidden="true">→</span></a>
+              {showPortfolio && <a className="button button-secondary" href="#work">View work</a>}
+            </div>
+            <div className="hero-photo"><Image src={studioHero} alt="A sunlit creative studio with a ByLili laptop, ceramics and leafy branches" fill priority sizes="(max-width: 800px) min(560px, calc(100vw - 48px)), 77vw" /></div>
+            <ul className="benefits" aria-label="Design priorities">
+              <li><BenefitIcon type="design"/><span>Thoughtful<br/>design</span></li>
+              <li><BenefitIcon type="mobile"/><span>Mobile<br/>first</span></li>
+              <li><BenefitIcon type="business"/><span>Built for<br/>business</span></li>
+            </ul>
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+      </section>
+      <ServicesSection />
+      {showPortfolio && <PortfolioSection projects={publishedPortfolioProjects.slice(0, Math.max(1, siteSettings.portfolio.homepageLimit))} />}
+      <ProcessSection />
+      {siteSettings.testimonials.enabled && <TestimonialsSection items={feedback} preview={siteSettings.testimonials.preview} />}
+      <ContactSection />
+    </main>
+    <SiteFooter showPortfolio={showPortfolio} />
+  </>;
 }
