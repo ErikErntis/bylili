@@ -1,4 +1,7 @@
+"use client";
+
 import { processSteps } from "../lib/process";
+import { useI18n } from "../lib/i18n";
 
 function BotanicalShadow() {
   return <svg className="process-botanical" viewBox="0 0 420 400" fill="none" aria-hidden="true" focusable="false">
@@ -13,15 +16,16 @@ function BotanicalShadow() {
 }
 
 export default function ProcessSection() {
+  const { t } = useI18n();
   return <section className="process-section" id="process" aria-labelledby="process-title">
     <BotanicalShadow />
     <div className="process-inner shell">
-      <p className="eyebrow">How it works</p>
-      <h2 id="process-title">A simple process,<br/>from idea to launch.</h2>
+      <p className="eyebrow">{t("How it works")}</p>
+      <h2 id="process-title">{t("A simple process,")}<br/>{t("from idea to launch.")}</h2>
       <ol className="process-steps">
         {processSteps.map((step) => <li className="process-step" key={step.number}>
           <div className="process-marker" aria-hidden="true"><span className="process-number">{step.number}</span><span className="process-connector"><span>→</span></span></div>
-          <div className="process-step-copy"><h3>{step.title}</h3><p>{step.description}</p></div>
+          <div className="process-step-copy"><h3>{t(step.title)}</h3><p>{t(step.description)}</p></div>
         </li>)}
       </ol>
     </div>

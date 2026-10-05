@@ -541,3 +541,7 @@ body:has(.portfolio-section h1) .portfolio-section { padding-top: 60px; }
 .seo-scope aside h3 { margin-top: 0; }
 .seo-scope .wd-text-link { display: inline-block; line-height: 1.7; margin-top: 10px; }
 @media (max-width: 800px) { .seo-scope { grid-template-columns: 1fr; gap: 25px; padding-bottom: 45px; } .seo-review { padding: 23px; } }
+
+.language-switch{display:inline-flex;align-items:center;gap:.35rem;font-size:.72rem;letter-spacing:.08em;white-space:nowrap}
+.language-switch button{background:none;border:0;color:inherit;cursor:pointer;padding:.35rem .1rem;opacity:.68;font:inherit}
+.language-switch button[aria-pressed="true"]{opacity:1;text-decoration:underline;text-underline-offset:.25rem}

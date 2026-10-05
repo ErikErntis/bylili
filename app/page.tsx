@@ -1,4 +1,7 @@
+"use client";
+
 import Image from "next/image";
+import { useI18n } from "./lib/i18n";
 import ContactSection from "./components/contact-section";
 import SiteFooter from "./components/site-footer";
 import TestimonialsSection from "./components/testimonials-section";
@@ -20,28 +23,29 @@ function BenefitIcon({ type }: { type: "design" | "mobile" | "business" }) {
 }
 
 export default function Home() {
+  const { t } = useI18n();
   const showPortfolio = siteSettings.portfolio.enabled && publishedPortfolioProjects.length > 0;
   const feedback = siteSettings.testimonials.preview ? testimonialPlaceholders : testimonials.filter((item) => item.published);
   return <>
-    <a className="skip-link" href="#main">Skip to content</a>
+    <a className="skip-link" href="#main">{t("Skip to content")}</a>
     <StudioHeader showPortfolio={showPortfolio} />
     <main id="main">
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-wash" aria-hidden="true" />
         <div className="hero-content shell">
           <div className="hero-copy">
-            <p className="eyebrow">Websites with purpose</p>
-            <h1 id="hero-title">Beautiful websites<br className="wide-break" /> for brands that<br className="wide-break" /> want to <em>grow.</em></h1>
-            <p className="hero-description">Thoughtful websites that tell your story, connect with your customers and help your business grow.</p>
+            <p className="eyebrow">{t("Websites with purpose")}</p>
+            <h1 id="hero-title">{t("Beautiful websites")}<br className="wide-break" /> {t("for brands that")}<br className="wide-break" /> {t("want to")} <em>{t("grow.")}</em></h1>
+            <p className="hero-description">{t("Thoughtful websites that tell your story, connect with your customers and help your business grow.")}</p>
             <div className="hero-actions">
-              <a className="button button-primary" href="#project" data-project-trigger>Let’s talk about your website <span aria-hidden="true">→</span></a>
-              {showPortfolio && <a className="button button-secondary" href="#work">View work</a>}
+              <a className="button button-primary" href="#project" data-project-trigger>{t("Let’s talk about your website")} <span aria-hidden="true">→</span></a>
+              {showPortfolio && <a className="button button-secondary" href="#work">{t("View work")}</a>}
             </div>
             <div className="hero-photo"><Image src={studioHero} alt="A sunlit creative studio with a ByLili laptop, ceramics and leafy branches" fill priority sizes="(max-width: 800px) min(560px, calc(100vw - 48px)), 77vw" /></div>
-            <ul className="benefits" aria-label="Design priorities">
-              <li><BenefitIcon type="design"/><span>Thoughtful<br/>design</span></li>
-              <li><BenefitIcon type="mobile"/><span>Mobile<br/>first</span></li>
-              <li><BenefitIcon type="business"/><span>Built for<br/>business</span></li>
+            <ul className="benefits" aria-label={t("Design priorities")}>
+              <li><BenefitIcon type="design"/><span>{t("Thoughtful")}<br/>{t("design")}</span></li>
+              <li><BenefitIcon type="mobile"/><span>{t("Mobile")}<br/>{t("first")}</span></li>
+              <li><BenefitIcon type="business"/><span>{t("Built for")}<br/>{t("business")}</span></li>
             </ul>
           </div>
         </div>

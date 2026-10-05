@@ -1,5 +1,8 @@
+"use client";
+
 import { contactContent, contactDetails, getContactHref } from "../lib/contact";
 import BotanicalDetail from "./botanical-detail";
+import { useI18n } from "../lib/i18n";
 
 type SocialKind = "instagram" | "whatsapp" | "linkedin" | "email";
 function SocialIcon({ kind }: { kind: SocialKind }) {
@@ -12,6 +15,7 @@ function SocialIcon({ kind }: { kind: SocialKind }) {
 }
 
 export default function SiteFooter({ showPortfolio = false }: { showPortfolio?: boolean }) {
+  const { t } = useI18n();
   const href = getContactHref();
   const phone = contactDetails.whatsapp.replace(/\D/g, "");
   const socials: { kind: SocialKind; label: string; href: string }[] = [
@@ -25,11 +29,11 @@ export default function SiteFooter({ showPortfolio = false }: { showPortfolio?: 
     <BotanicalDetail className="footer-botanical"/>
     <div className="shell footer-inner">
       <div className="footer-top">
-        <div className="footer-brand-block"><a href="/#main" className="footer-brand" aria-label="ByLili home"><svg viewBox="0 0 58 65" fill="none" aria-hidden="true"><path d="M15 52C25 34 49 8 43 4C35-2 14 34 18 51C22 67 47 45 43 34C39 22 15 43 7 55M18 43C30 31 42 24 46 27" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="47" cy="54" r="3" fill="#c98f82"/></svg><span>BYLILI</span><small>{contactContent.tagline}</small></a><p className="footer-location">{contactContent.location}</p></div>
-        <nav className="footer-nav" aria-label="Footer navigation"><a href="/#main">Home</a><a href="/#services">Services</a>{showPortfolio && <a href="/#work">Work</a>}<a href="#about" data-about-trigger>About</a><a href="/#contact">Contact</a></nav>
-        <div className="footer-connect"><p className="footer-connect-title">{socials.length ? contactContent.socialHeading : "Let’s connect"}</p>{socials.length > 0 ? <div className="footer-socials">{socials.map((social) => <a key={social.kind} href={social.href} aria-label={social.label} title={social.label}><SocialIcon kind={social.kind}/></a>)}</div> : <a className="footer-conversation" href={href ?? "#project"} data-project-trigger={href ? undefined : true}>Start a conversation <span aria-hidden="true">↗</span></a>}</div>
+        <div className="footer-brand-block"><a href="/#main" className="footer-brand" aria-label={t("ByLili home")}><svg viewBox="0 0 58 65" fill="none" aria-hidden="true"><path d="M15 52C25 34 49 8 43 4C35-2 14 34 18 51C22 67 47 45 43 34C39 22 15 43 7 55M18 43C30 31 42 24 46 27" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round"/><circle cx="47" cy="54" r="3" fill="#c98f82"/></svg><span>BYLILI</span><small>{t(contactContent.tagline)}</small></a><p className="footer-location">{t(contactContent.location)}</p></div>
+        <nav className="footer-nav" aria-label={t("Footer navigation")}><a href="/#main">{t("Home")}</a><a href="/#services">{t("Services")}</a>{showPortfolio && <a href="/#work">{t("Work")}</a>}<a href="#about" data-about-trigger>{t("About")}</a><a href="/#contact">{t("Contact")}</a></nav>
+        <div className="footer-connect"><p className="footer-connect-title">{t(socials.length ? contactContent.socialHeading : "Let’s connect")}</p>{socials.length > 0 ? <div className="footer-socials">{socials.map((social) => <a key={social.kind} href={social.href} aria-label={t(social.label)} title={t(social.label)}><SocialIcon kind={social.kind}/></a>)}</div> : <a className="footer-conversation" href={href ?? "#project"} data-project-trigger={href ? undefined : true}>{t("Start a conversation")} <span aria-hidden="true">↗</span></a>}</div>
       </div>
-      <div className="footer-bottom"><p>© {new Date().getFullYear()} ByLili. All rights reserved.</p><div>{contactDetails.privacyUrl && <a href={contactDetails.privacyUrl}>Privacy Policy</a>}{contactDetails.termsUrl && <a href={contactDetails.termsUrl}>Terms of Service</a>}</div></div>
+      <div className="footer-bottom"><p>© {new Date().getFullYear()} ByLili. {t("All rights reserved.")}</p><div>{contactDetails.privacyUrl && <a href={contactDetails.privacyUrl}>{t("Privacy Policy")}</a>}{contactDetails.termsUrl && <a href={contactDetails.termsUrl}>{t("Terms of Service")}</a>}</div></div>
     </div>
   </footer>;
 }

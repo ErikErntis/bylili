@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 
 import Link from "next/link";
 import { services, type Service, type ServiceId } from "../lib/services";
+import { useI18n } from "../lib/i18n";
 
 function ServiceIcon({ type }: { type: ServiceId }) {
   return <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.15" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -15,6 +16,7 @@ function ServiceIcon({ type }: { type: ServiceId }) {
 }
 
 export default function ServicesSection() {
+  const { t } = useI18n();
   const [selected, setSelected] = useState<Service>(services[0]);
   const dialog = useRef<HTMLDialogElement>(null);
 
@@ -25,25 +27,25 @@ export default function ServicesSection() {
 
   return <section className="services-section shell" id="services" aria-labelledby="services-title">
     <div className="services-heading">
-      <div><p className="eyebrow">Services</p><h2 id="services-title">What I can help you with.</h2></div>
-      <p className="services-intro">From simple landing pages to complete business websites<br className="services-intro-break" /> — I create designs that look great and actually work for your business.</p>
+      <div><p className="eyebrow">{t("Services")}</p><h2 id="services-title">{t("What I can help you with.")}</h2></div>
+      <p className="services-intro">{t("From simple landing pages to complete business websites — I create designs that look great and actually work for your business.")}</p>
     </div>
     <div className="services-grid">
       {services.map((service) => <article className="service-card" key={service.id}>
         <span className="service-icon"><ServiceIcon type={service.id}/></span>
-        <h3>{service.title}</h3>
-        <p>{service.description}</p>
-        {service.href ? <Link className="service-link" href={service.href}>Explore service <span aria-hidden="true">→</span></Link> : <button className="service-link" type="button" aria-label={`Learn more about ${service.title}`} aria-haspopup="dialog" onClick={() => showService(service)}>Learn more <span aria-hidden="true">→</span></button>}
+        <h3>{t(service.title)}</h3>
+        <p>{t(service.description)}</p>
+        {service.href ? <Link className="service-link" href={service.href}>{t("Explore service")} <span aria-hidden="true">→</span></Link> : <button className="service-link" type="button" aria-label={`${t("Learn more about")} ${t(service.title)}`} aria-haspopup="dialog" onClick={() => showService(service)}>{t("Learn more")} <span aria-hidden="true">→</span></button>}
       </article>)}
     </div>
     <dialog ref={dialog} className="preview-dialog service-dialog" aria-labelledby="service-dialog-title" onClick={(event) => { if (event.target === event.currentTarget) dialog.current?.close(); }}>
       <div className="dialog-inner">
-        <form method="dialog"><button className="dialog-close" aria-label="Close service details">×</button></form>
-        <p className="eyebrow">Made for your business</p>
-        <h2 id="service-dialog-title">{selected.title}</h2>
-        <p>{selected.detail}</p>
-        <ul className="service-includes">{selected.includes.map((item) => <li key={item}>{item}</li>)}</ul>
-        <a className="button button-primary service-enquiry" href="#project" data-project-trigger onClick={() => dialog.current?.close()}>Let’s talk <span aria-hidden="true">→</span></a>
+        <form method="dialog"><button className="dialog-close" aria-label={t("Close service details")}>×</button></form>
+        <p className="eyebrow">{t("Made for your business")}</p>
+        <h2 id="service-dialog-title">{t(selected.title)}</h2>
+        <p>{t(selected.detail)}</p>
+        <ul className="service-includes">{selected.includes.map((item) => <li key={item}>{t(item)}</li>)}</ul>
+        <a className="button button-primary service-enquiry" href="#project" data-project-trigger onClick={() => dialog.current?.close()}>{t("Let’s talk")} <span aria-hidden="true">→</span></a>
       </div>
     </dialog>
   </section>;

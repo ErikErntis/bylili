@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import { DM_Sans, DM_Serif_Display } from "next/font/google";
 import "./globals.css";
 import SiteMotion from "./components/site-motion";
+import { I18nProvider } from "./lib/i18n";
 
 const sans = DM_Sans({ subsets: ["latin"], variable: "--font-dm-sans", display: "swap" });
 const serif = DM_Serif_Display({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-dm-serif", display: "swap" });
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${sans.variable} ${serif.variable}`}>
-      <body>{children}<SiteMotion /></body>
+      <body><I18nProvider>{children}</I18nProvider><SiteMotion /></body>
     </html>
   );
 }
